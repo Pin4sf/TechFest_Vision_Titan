@@ -55,15 +55,19 @@ We are using the Ultralytics YOLO11 model for object detection and the Meta's Se
    - Load input images or video frames for object detection.
    - Preprocess images for YOLO11 and SAM2 input formats.
   
-2. **Object Detection and Tracking**: 
-   - Use YOLO11 to detect objects in the input images or video frames.
+2. **Custom Training of YOLOv11 on a Custom Dataset:**: 
+   - We fine-tuned the YOLOv11 model on a custom dataset using a specified training configuration,  including a defined number of epochs, image size, and patience for early stopping. Training progress was monitored through various metrics, such as box loss, classification loss, and DFL loss, across both training and validation data.
+
+3. **Applying the Trained Model for Object Detection and Tracking**:
+   - Use trained YOLO11 to detect objects in the input images or video frames.
    - Extract bounding boxes, class labels, and confidence scores for detected objects.
    - Track objects across frames using BOT_sort, which efficiently handles multiple objects and occlusions. BOT_sort also retains object identity across frames, even if an object temporarily leaves and re-enters the frame.
-3. **Object Segmentation**:
+     
+4. **Object Segmentation**:
    - Use SAM2 to segment detected objects and refine the boundaries for precise localization.
    - Generate pixel-wise masks for each object to separate them from the background.
    - Combine segmentation results with detection for accurate object localization.
-4. **Integrating YOLO11 and SAM2**:
+5. **Integrating YOLO11 and SAM2**:
    - Combine the detection results from YOLO11 with the segmentation results from SAM2 to achieve accurate object detection and localization.
    - Use the tracking information to maintain consistency across frames and track objects effectively.
    - Align annotation formats between YOLO11 and SAM2 by converting SAM2 output to YOLO11-compatible format for final output.
@@ -75,6 +79,32 @@ We are using the Ultralytics YOLO11 model for object detection and the Meta's Se
 - **Real-time Detection**: Processes images and video frames swiftly for real-world applications.
 - **Diverse Environment Handling**: Robust to various lighting conditions, angles, and occlusions.
 - **Object Tracking**: Tracks detected objects across video frames.
+
+## Custom Training Summary
+We trained YOLOv11 on a custom basketball dataset, fine-tuning it for enhanced performance. The model was trained for 75 epochs using high-resolution images (1088x1088), and early stopping was implemented to optimize performance. Here are the key results:
+
+### Performance Metrics
+- **Precision**: 0.991
+- **Recall**: 0.985
+- **Mean Average Precision (mAP)**:
+  - **mAP@50**: 0.993
+  - **mAP@50-95**: 0.749 (training), improved to 0.756 during validation
+- **Losses**:
+  - Box loss: 0.5878
+  - Classification loss: 0.313
+  - Distribution Focal Loss (DFL): 0.9233
+- **Speed**:
+  - Average inference time of 32.34 ms per image/frame.
+
+### Object Tracking
+- Applied on video data using BOT_sort to ensure consistent object identification and tracking even with occlusions.
+
+### Graphs and Visualizations
+Attached below are graphs depicting the training and validation losses over the epochs, along with mAP@50 and mAP@50-95 metrics, providing a visual reference of the model's performance progression.
+
+![image](https://github.com/user-attachments/assets/b9d70fea-f607-4cd4-a8eb-0634afefe33b)
+![image](https://github.com/user-attachments/assets/40ef9d1f-8964-4a39-b615-0d2bd5a312a4)
+
 
 ##  Our Work
 Currently, we have implemented YOLO11 for object detection and BOT_sort for tracking as well as SAM2 for segmentation. We are working on integrating and refining code to combine detection and segmentation outputs for the final results.
