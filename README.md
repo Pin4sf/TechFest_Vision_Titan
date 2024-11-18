@@ -63,7 +63,7 @@ We are using the Ultralytics YOLO11 model for object detection and the Meta's Se
    - Use SAM2 to segment detected objects and refine the boundaries for precise localization.
    - Generate pixel-wise masks for each object to separate them from the background.
    - Combine segmentation results with detection for accurate object localization.
-4. I**Integrating YOLO11 and SAM2**:
+4. **Integrating YOLO11 and SAM2**:
    - Combine the detection results from YOLO11 with the segmentation results from SAM2 to achieve accurate object detection and localization.
    - Use the tracking information to maintain consistency across frames and track objects effectively.
    - Align annotation formats between YOLO11 and SAM2 by converting SAM2 output to YOLO11-compatible format for final output.
